@@ -12,7 +12,15 @@
       --numcards: 4;
       --outline-width: 0px;
     }
+    body::-webkit-scrollbar {
+      display: none;
+    }
 
+    /* Hide scrollbar for IE, Edge and Firefox */
+    body {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
     #cards {
       padding-bottom: calc(var(--numcards) * var(--card-top-offset));
       margin-bottom: var(--card-margin);

@@ -9,7 +9,9 @@
       font-family: "Geist Sans";
       src: url("https://assets.codepen.io/605876/GeistVF.ttf") format("truetype");
     }
-
+    body::-webkit-scrollbar {
+      display: none;
+    }
     *,
     *:after,
     *:before {
@@ -27,7 +29,7 @@
       background: black;
       color: hsl(0 0% 90%);
       overflow-x: hidden;
-      margin: 0;
+      margin: 0; /* Added reset */
     }
 
     p {
@@ -203,6 +205,7 @@
       gap: 2rem 0;
     }
 
+    /* Text block styling */
     .chat-container {
       height: 100vh;
       width: 100%;
@@ -388,7 +391,7 @@
             animation-range: exit 0% exit 50%, exit 0% exit 25%;
             transform-origin: 50% 0;
           }
-
+        /* Keyframes collection	*/
         @keyframes slide-in {
           0% {
             translate: 0 100%;
@@ -449,26 +452,27 @@
 </head>
 <body>
 
+
   <main>
     <section>
       <div class="fixed">
-        <img src="https://images.unsplash.com/photo-1527689368864-3a821dbccc34?w=1920&h=1080&fit=crop" alt="Mental wellness">
+        <img src="https://fastly.picsum.photos/id/310/1920/1080.jpg?hmac=HDJM8ptvuyfahXPE6mcsYhG1XGE1mUb2oaa4hlFZ0yg" alt="">
         <div class="content">
-          <h1>Your Mental Health Matters.</h1>
-          <p>Discover a compassionate approach to psychological wellness. We provide evidence-based therapy, mindfulness techniques, and personalized support to help you thrive. Your journey to emotional well-being starts here.</p>
+          <h1>Scroll and see.</h1>
+          <p>The magic of CSS scroll-driven animation to power a landing page. No JavaScript harmed. Animation runs off the main thread. Chain them and make use of fixed elements.</p>
         </div>
       </div>
     </section>
     <section>
       <article>
         <div class="fixed">
-          <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=1920&h=1080&fit=crop" alt="Therapy session">
+          <img src="https://fastly.picsum.photos/id/846/1920/1080.jpg?hmac=rx55XDjKPLjmW5WdHBRqOphU4wZkLT5W3TC_WBdvyVY" alt="">
         </div>
         <div class="static">
           <div class="content">
             <div class="text-wrap">
               <div class="loud-wrap">
-                <h2>Healing begins with conversation.</h2>
+                <h2>Think out loud.</h2>
               </div>
             </div>
           </div>
@@ -478,39 +482,47 @@
         <div class="fixed"></div>
         <div class="static">
           <div class="content">
-            <h2>Evidence-based care.<br />Compassionate support.</h2>
+            <h2>Do stuff with code.<br />Mess about and find out.</h2>
           </div>
         </div>
       </article>
       <article>
         <div class="fixed">
-          <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=1920&h=1080&fit=crop" alt="Mental health support">
+          <img src="https://fastly.picsum.photos/id/985/1920/1080.jpg?hmac=dLb_5lBJW4AZhZDUXweY5WlrnscpKLtCKffaqSrF9Vw" alt="">
         </div>
         <div class="static">
           <div class="content">
-            <h2>Build resilience. Find balance.</h2>
+            <h2>Make cool stuff.</h2>
             <div class="chat-container">
               <div class="text-blocks">
-                <p>How do I manage stress and anxiety?</p>
-                <p>Through mindfulness practices, cognitive behavioral therapy, and personalized coping strategies tailored to your needs.</p>
-                <p>What conditions do you treat?</p>
-                <p>We support clients with depression, anxiety, trauma, relationship issues, and life transitions.</p>
-                <p>Ready to take the first step?</p>
+                <p>How can I do this?</p>
+                <p>With CSS scroll-driven animations. You don't need any JavaScript.</p>
+                <p>Any advice?</p>
+                <p>Just one thing... Make it pop!</p>
+                <p>Thanks Jhey.</p>
               </div>
             </div>
             <div class="filler">
-              <h2>You deserve wellness.</h2>
+              <h2>Pretty cool.</h2>
             </div>
           </div>
         </div>
       </article>
       <article>
+        <!-- <div class="fixed">
+              <img src="https://fastly.picsum.photos/id/985/1920/1080.jpg?hmac=dLb_5lBJW4AZhZDUXweY5WlrnscpKLtCKffaqSrF9Vw" alt="">
+            </div> -->
         <div class="fixed">
-          <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1920&h=1080&fit=crop" alt="Path to wellness" />
+          <img src="https://fastly.picsum.photos/id/681/1920/1080.jpg?hmac=qyb0NfTEkQw9QdsIYQbV0GhAEyKiPcAfetmIF_e8Kik" alt="" />
           <div class="content">
-            <h2>Start your journey.<br>Schedule today.</h2>
+            <h2>StarkDev.<br>Follow for more.</h2>
           </div>
         </div>
+        <!-- <div class="static">
+              <div class="content">
+                <h2>StarkDev.</h2>
+              </div>
+            </div> -->
       </article>
     </section>
   </main>
@@ -521,6 +533,8 @@
 
     if (!CSS.supports('animation-timeline: view()') && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
       gsap.registerPlugin(ScrollTrigger)
+      // Set up all the scroll animations with ScrollTrigger instead.
+      // Blanket styles
       gsap.set('.fixed', {
         position: 'fixed',
         inset: 0,
@@ -530,6 +544,7 @@
         inset: 0,
         zIndex: 6,
       })
+      // First section
       gsap.set('section:first-of-type .fixed', {
         transformOrigin: '50% 0%',
       })
@@ -552,6 +567,7 @@
           end: 'bottom 75%'
         }
       })
+      // The second section with image scaling down, etc.
       gsap.set('section:nth-of-type(2) article:first-of-type .fixed', {
         clipPath: 'ellipse(220% 200% at 50% 300%)',
         zIndex: 3,
@@ -602,6 +618,7 @@
           end: 'top 0%',
         }
       })
+      // Blur the text on exit
       gsap.to('section:nth-of-type(2) article:first-of-type .text-wrap', {
         filter: 'blur(4rem)',
         opacity: 0,
@@ -613,6 +630,7 @@
         }
       })
 
+      // Third section
       gsap.set('section:nth-of-type(2) article:nth-of-type(2) .fixed', { zIndex: 3 })
       gsap.from('section:nth-of-type(2) article:nth-of-type(2) .fixed', {
         opacity: 0,
@@ -643,6 +661,7 @@
           end: 'bottom 50%',
         }
       })
+      // Fourth
       gsap.set('.filler', {
         display: 'block',
         position: 'absolute',
@@ -676,6 +695,7 @@
           end: 'bottom 85%'
         }
       })
+      // Animate the text blocks
       const LINES = document.querySelectorAll('.text-blocks p')
       LINES.forEach((LINE, index) => {
         gsap.from(LINE, {
@@ -708,6 +728,7 @@
           end: 'bottom 30%'
         }
       })
+      // The last piece is unclipping the end piece
       gsap.set('section:nth-of-type(2) article:last-of-type .fixed', {
         clipPath: 'ellipse(220% 200% at 50% 300%)',
         zIndex: 5,
