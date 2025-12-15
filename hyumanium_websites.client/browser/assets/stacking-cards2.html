@@ -113,10 +113,10 @@
       width: 150%;
       object-fit: cover;
       z-index: -1;
-      position: absolute;
+     /* position: absolute;*/
       inset: 0;
-      left: 50%;
-      translate: -50% 0;
+   /*   left: 50%;
+      translate: -50% 0;*/
       filter: brightness(0.5);
     }
 
@@ -174,6 +174,14 @@
       position: absolute;
       inset: 0;
       background: hsl(0 0% 0% / 0.25);
+    }
+    /* Fix for menopause section - show complete image */
+    section:nth-of-type(2) article:last-of-type .fixed img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* Changed from cover to contain */
+      object-position: center; /* Center the image */
+      filter: brightness(1); /* Remove the dark filter if desired */
     }
 
     section:nth-of-type(2) article:first-of-type h2 {
@@ -449,6 +457,67 @@
         }
       }
     }
+    /* Split layout for menopause section */
+    section:nth-of-type(2) article:last-of-type .fixed.split-layout {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      background: black;
+    }
+
+    .split-left {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+      .split-left img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        filter: brightness(0.8);
+      }
+
+    .split-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: black;
+    }
+
+    .content-inner {
+      max-width: 600px;
+      padding: 2rem;
+    }
+
+      .content-inner h2 {
+        margin-bottom: 1.5rem;
+        color: hsl(0 0% 90%);
+      }
+
+      .content-inner p {
+        font-size: clamp(1rem, 0.5vw + 1rem, 1.5rem);
+        line-height: 1.6;
+        color: hsl(0 0% 80%);
+      }
+
+    /* Responsive adjustment for mobile */
+    @media (max-width: 768px) {
+      section:nth-of-type(2) article:last-of-type .fixed.split-layout {
+        flex-direction: column;
+      }
+
+      .split-left, .split-right {
+        flex: none;
+        height: 50vh;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -514,22 +583,19 @@
         </div>
       </article>
       <article>
-        <!-- <div class="fixed">
-              <img src="https://fastly.picsum.photos/id/985/1920/1080.jpg?hmac=dLb_5lBJW4AZhZDUXweY5WlrnscpKLtCKffaqSrF9Vw" alt="">
-            </div> -->
-        <div class="fixed">
-          <img src="https://fastly.picsum.photos/id/681/1920/1080.jpg?hmac=qyb0NfTEkQw9QdsIYQbV0GhAEyKiPcAfetmIF_e8Kik" alt="" />
-          <div class="content">
-            <h2>Menopause Support Services</h2>
-            <p>Our services include awareness workshops, counselling sessions, and tailored lifestyle programs. we empower women to manage this transition effectively while guiding employers to create inclusive policies and supportive environments. With a focus on well‑being, resilience, and respect, our programs ensure that menopause is recognized not as a barrier, but as a stage of strength and growth.</p>
+        <div class="fixed split-layout">
+          <div class="split-left">
+            <img src="menapause.jpg" alt="Menopause Support" />
+          </div>
+          <div class="split-right">
+            <div class="content-inner">
+              <h2>Menopause Support Services</h2>
+              <p>Our services include awareness workshops, counselling sessions, and tailored lifestyle programs. We empower women to manage this transition effectively while guiding employers to create inclusive policies and supportive environments. With a focus on well‑being, resilience, and respect, our programs ensure that menopause is recognized not as a barrier, but as a stage of strength and growth.</p>
+            </div>
           </div>
         </div>
-        <!-- <div class="static">
-              <div class="content">
-                <h2>StarkDev.</h2>
-              </div>
-            </div> -->
       </article>
+
     </section>
   </main>
 
