@@ -454,5 +454,35 @@
       sendButton.disabled = true;
     })();
   </script>
-<link rel="modulepreload" href="chunk-6MDQTQU3.js"><script src="polyfills-FFHMD2TL.js" type="module"></script><script src="main-LOMTKAB6.js" type="module"></script></body>
+  <script>
+    // Disable right-click context menu
+    document.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+    });
+
+    // Disable F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S, etc.
+    document.addEventListener('keydown', function (e) {
+      // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+        (e.ctrlKey && e.key === 'u') ||
+        (e.ctrlKey && e.key === 's')
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // Disable console.log in production (optional: add to your Angular service for better control)
+    if (window.location.hostname !== 'localhost') {
+      console.log = function () { };
+      console.warn = function () { };
+      console.error = function () { };
+      console.info = function () { };
+      console.debug = function () { };
+    }
+  </script>
+
+<link rel="modulepreload" href="chunk-6MDQTQU3.js"><script src="polyfills-FFHMD2TL.js" type="module"></script><script src="main-NPIHW3CG.js" type="module"></script></body>
 </html>
