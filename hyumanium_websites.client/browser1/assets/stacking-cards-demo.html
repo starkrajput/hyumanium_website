@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exploring Psychology - Stacking Cards</title>
+  <style>
+    :root {
+      --card-height: 40vw;
+      --card-margin: 4vw;
+      --card-top-offset: 1em;
+      --numcards: 5;
+      --outline-width: 0px;
+    }
+
+    body::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    body {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+
+    #cards {
+      padding-bottom: calc(var(--numcards) * var(--card-top-offset));
+      margin-bottom: var(--card-margin);
+    }
+
+    #card_1 {
+      --index: 1;
+    }
+
+    #card_2 {
+      --index: 2;
+    }
+
+    #card_3 {
+      --index: 3;
+    }
+
+    #card_4 {
+      --index: 4;
+    }
+
+    #card_5 {
+      --index: 5;
+    }
+
+    .card {
+      position: sticky;
+      top: 0;
+      padding-top: calc(var(--index) * var(--card-top-offset));
+    }
+
+    @supports (animation-timeline: works) {
+      @scroll-timeline cards-element-scrolls-in-body {
+        source: selector(body);
+        scroll-offsets: selector(#cards) start 1, selector(#cards) start 0;
+        start: selector(#cards) start 1;
+        end: selector(#cards) start 0;
+        time-range: 4s;
+      }
+
+      .card {
+        --index0: calc(var(--index) - 1);
+        --reverse-index: calc(var(--numcards) - var(--index0));
+        --reverse-index0: calc(var(--reverse-index) - 1);
+      }
+
+      .card__content {
+        transform-origin: 50% 0%;
+        will-change: transform;
+        --duration: calc(var(--reverse-index0) * 1s);
+        --delay: calc(var(--index0) * 1s);
+        animation: var(--duration) linear scale var(--delay) forwards;
+        animation-timeline: cards-element-scrolls-in-body;
+      }
+
+      @keyframes scale {
+        to {
+          transform: scale(calc(1.1 - calc(0.1 * var(--reverse-index))));
+        }
+      }
+    }
+
+    /** DEBUG **/
+    #debug {
+      position: fixed;
+      top: 1em;
+      left: 1em;
+    }
+
+      #debug::after {
+        content: " Show Debug";
+        margin-left: 1.5em;
+        color: white;
+        white-space: nowrap;
+      }
+
+      #debug:checked ~ main {
+        --outline-width: 1px;
+      }
+
+    /** PAGE STYLING **/
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: white;
+      color: rgb(255, 255, 255);
+      text-align: center;
+      font-size: calc(1em + 0.5vw);
+    }
+
+    header, main {
+      width: 80vw;
+      margin: 0 auto;
+    }
+
+    header {
+      height: 100vh;
+      display: grid;
+      place-items: center;
+    }
+
+    #cards {
+      list-style: none;
+      outline: calc(var(--outline-width) * 10) solid blue;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(var(--numcards), var(--card-height));
+      gap: var(--card-margin);
+    }
+
+    .card {
+      outline: var(--outline-width) solid hotpink;
+    }
+
+    .card__content {
+      box-shadow: 0 0.2em 1em rgba(0, 0, 0, 0.1), 0 1em 2em rgba(0, 0, 0, 0.1);
+      background: rgb(255, 255, 255);
+      color: rgb(10, 5, 7);
+      border-radius: 1em;
+      overflow: hidden;
+      display: grid;
+      grid-template-areas: "text img";
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      align-items: stretch;
+      outline: var(--outline-width) solid lime;
+    }
+
+      .card__content > div {
+        grid-area: text;
+        width: 80%;
+        place-self: center;
+        text-align: left;
+        display: grid;
+        gap: 1em;
+        place-items: start;
+      }
+
+      .card__content > figure {
+        grid-area: img;
+        overflow: hidden;
+      }
+
+        .card__content > figure > img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+    h1 {
+      font-weight: 300;
+      font-size: 3.5em;
+    }
+
+    h2 {
+      font-weight: 300;
+      font-size: 2.5em;
+    }
+
+    p {
+      font-family: sans-serif;
+      font-weight: 300;
+      line-height: 1.42;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #4584f3 0%, #00b8a9 100%);
+      color: rgb(255 255 255);
+      text-decoration: none;
+      display: inline-block;
+      padding: 0.5em;
+      border-radius: 0.25em;
+    }
+
+    aside {
+      width: 50vw;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+      aside p {
+        margin-bottom: 1em;
+      }
+
+    /* Iframe optimizations */
+    html, body {
+      height: 100vh;
+      overflow: auto;
+    }
+
+    /* MOBILE RESPONSIVE STYLES */
+    @media screen and (max-width: 768px) {
+      :root {
+        --card-height: 120vw;
+        --card-margin: 6vw;
+        --card-top-offset: 0.5em;
+      }
+
+      body {
+        font-size: calc(0.9em + 0.5vw);
+      }
+
+      header, main {
+        width: 90vw;
+      }
+
+      .card__content {
+        grid-template-areas:
+          "img"
+          "text";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        min-height: 120vw;
+      }
+
+        .card__content > div {
+          width: 90%;
+          padding: 1.5em 0;
+          gap: 0.8em;
+        }
+
+        .card__content > figure {
+          min-height: 50vw;
+          max-height: 50vw;
+        }
+
+      h1 {
+        font-size: 2em;
+      }
+
+      h2 {
+        font-size: 1.5em;
+      }
+
+      p {
+        font-size: 0.9em;
+        line-height: 1.5;
+      }
+
+      .btn {
+        padding: 0.6em 1em;
+        font-size: 0.9em;
+      }
+
+      aside {
+        width: 90vw;
+      }
+    }
+
+    /* EXTRA SMALL MOBILE */
+    @media screen and (max-width: 480px) {
+      :root {
+        --card-height: 140vw;
+        --card-margin: 5vw;
+        --card-top-offset: 0.4em;
+      }
+
+      header, main {
+        width: 95vw;
+      }
+
+      .card__content {
+        min-height: 140vw;
+        border-radius: 0.8em;
+      }
+
+        .card__content > div {
+          width: 85%;
+          padding: 1em 0;
+          gap: 0.6em;
+        }
+
+        .card__content > figure {
+          min-height: 45vw;
+          max-height: 45vw;
+        }
+
+      h2 {
+        font-size: 1.3em;
+      }
+
+      p {
+        font-size: 0.85em;
+      }
+
+      .btn {
+        padding: 0.5em 0.8em;
+        font-size: 0.85em;
+      }
+    }
+
+    /* LANDSCAPE MOBILE */
+    @media screen and (max-width: 896px) and (orientation: landscape) {
+      :root {
+        --card-height: 80vw;
+      }
+
+      .card__content {
+        grid-template-areas: "text img";
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        min-height: 80vw;
+      }
+
+        .card__content > figure {
+          min-height: auto;
+          max-height: none;
+        }
+    }
+
+    /* TABLET */
+    @media screen and (min-width: 769px) and (max-width: 1024px) {
+      header, main {
+        width: 85vw;
+      }
+
+      h2 {
+        font-size: 2em;
+      }
+
+      .card__content > div {
+        width: 85%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <ul id="cards">
+      <li class="card" id="card_1">
+        <div class="card__content">
+          <div>
+            <h2>Cognitive Psychology</h2>
+            <p>Explores mental processes including perception, memory, thinking, and problem-solving. This branch examines how we acquire, process, and store information throughout our daily lives.</p>
+            <p><a href="#top" class="btn btn--accent">Learn More</a></p>
+          </div>
+          <figure>
+            <img src="cognitive.png" alt="Brain and cognitive processes illustration">
+          </figure>
+        </div>
+      </li>
+      <li class="card" id="card_2">
+        <div class="card__content">
+          <div>
+            <h2>Developmental Psychology</h2>
+            <p>Studies human growth and changes across the lifespan, from infancy to old age. Focuses on physical, cognitive, emotional, and social development, including how childhood experiences shape adult behavior.</p>
+            <p><a href="#top" class="btn btn--accent">Discover More</a></p>
+          </div>
+          <figure>
+            <img src="childplay.png" alt="Child development and growth">
+          </figure>
+        </div>
+      </li>
+      <li class="card" id="card_3">
+        <div class="card__content">
+          <div>
+            <h2>Social Psychology</h2>
+            <p>Examines how social interactions, relationships, and group dynamics influence behavior and cognition. Explores how we perceive ourselves in relation to others and how this affects our choices and beliefs.</p>
+            <p><a href="#top" class="btn btn--accent">Explore Further</a></p>
+          </div>
+          <figure>
+            <img src="socialpsy.png" alt="Social interaction and group dynamics">
+          </figure>
+        </div>
+      </li>
+      <li class="card" id="card_4">
+        <div class="card__content">
+          <div>
+            <h2>Clinical Psychology</h2>
+            <p>Focuses on diagnosing and treating mental health disorders and emotional difficulties. Applies evidence-based therapies like Cognitive-Behavioral Therapy to help individuals overcome psychological barriers and improve quality of life.</p>
+            <p><a href="#top" class="btn btn--accent">Read More</a></p>
+          </div>
+          <figure>
+            <img src="ladies.png" alt="Mental health and therapy session">
+          </figure>
+        </div>
+      </li>
+      <li class="card" id="card_5">
+        <div class="card__content">
+          <div>
+            <h2>Organisational Psychology</h2>
+            <p>Focuses on diagnosing and treating mental health disorders and emotional difficulties. Applies evidence-based therapies like Cognitive-Behavioral Therapy to help individuals overcome psychological barriers and improve quality of life.</p>
+            <p><a href="#top" class="btn btn--accent">Read More</a></p>
+          </div>
+          <figure>
+            <img src="Organisitional.png" alt="Mental health and therapy session">
+          </figure>
+        </div>
+      </li>
+    </ul>
+  </main>
+
+</body>
+</html>
